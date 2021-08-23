@@ -40,7 +40,6 @@ run_infracost:
   dependencies:
     - plan_terraform
   script:
-      - cd ${TF_ROOT}
       - breakdown --path plan.json
       - diff --path plan.json
 
