@@ -1,14 +1,54 @@
-image: python:latest
-
+stages:
+  - infra
+  - runtime
 variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-
+    TF_ROOT: ${CI_PROJECT_DIR}/infracost
+    TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/example-production
+    TF_STATE: ${CI_PROJECT_NAME}
 cache:
-  paths:
-    - .cache/pip
-    - venv/
+    key: example-production
+    paths:
+      - ${TF_ROOT}/.terraform
 
-run_cloud_custodian:
+plan_terraform:
+  stage: infra
+  image:
+    name: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+    entrypoint:
+      - '/usr/bin/env'
+      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  script:
+      - cd ${TF_ROOT}
+      - gitlab-terraform init
+      - gitlab-terraform validate
+      - gitlab-terraform plan
+      - gitlab-terraform plan-json
+  artifacts:
+    paths:
+      - ${TF_ROOT}/plan.json
+
+run_infracost:
+  stage: infra
+  dependencies:
+    - plan_terraform
+  image:
+    name: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+    entrypoint:
+      - '/usr/bin/env'
+      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  script:
+      - cd ${TF_ROOT}
+      - cat plan.json
+
+run_custodian:
+  image: python:latest
+  variables:
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  cache:
+    paths:
+      - .cache/pip
+      - venv/
+  stage: runtime
   before_script:
     - python -V
     - pip install virtualenv
