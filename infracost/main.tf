@@ -41,16 +41,10 @@ module "gke" {
   subnetwork                  = var.subnetwork
   ip_range_pods               = var.ip_range_pods
   ip_range_services           = var.ip_range_services
-  create_service_account      = false
-  compute_engine_service_account = google_service_account.default.email
+  create_service_account      = true
   enable_binary_authorization = var.enable_binary_authorization
   skip_provisioners           = var.skip_provisioners
   # depends_on = [
   #   google_service_account.default
   # ]
-}
-
-resource "google_service_account" "default" {
-  account_id   = "gke-service-account"
-  display_name = "GKE Service-Account"
 }
