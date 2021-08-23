@@ -45,9 +45,9 @@ module "gke" {
   # service_account             = google_service_account.default.email
   enable_binary_authorization = var.enable_binary_authorization
   skip_provisioners           = var.skip_provisioners
-  depends_on = [
-    google_service_account.default
-  ]
+  # depends_on = [
+  #   google_service_account.default
+  # ]
 }
 
 # resource "google_service_account" "default" {
