@@ -42,7 +42,7 @@ module "gke" {
   ip_range_pods               = var.ip_range_pods
   ip_range_services           = var.ip_range_services
   create_service_account      = false
-  service_account             = google_service_account.default.email
+  # service_account             = google_service_account.default.email
   enable_binary_authorization = var.enable_binary_authorization
   skip_provisioners           = var.skip_provisioners
   depends_on = [
@@ -50,7 +50,7 @@ module "gke" {
   ]
 }
 
-resource "google_service_account" "default" {
-  account_id   = "gke-service-account"
-  display_name = "GKE Service-Account"
-}
+# resource "google_service_account" "default" {
+#   account_id   = "gke-service-account"
+#   display_name = "GKE Service-Account"
+# }
