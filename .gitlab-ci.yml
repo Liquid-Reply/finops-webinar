@@ -24,8 +24,8 @@ plan_terraform:
       - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
       - gitlab-terraform init
       - gitlab-terraform validate
-      - gitlab-terraform plan
-      - gitlab-terraform plan-json
+      - gitlab-terraform plan -out tfplan.binary
+      - gitlab-terraform show -json tfplan.binary > plan.json
   artifacts:
     name: plan_terraform
     paths:
@@ -34,18 +34,14 @@ plan_terraform:
       terraform: ${TF_ROOT}/plan.json
 
 run_infracost:
+  image: infracost/infracost
   stage: check
   dependencies:
     - plan_terraform
-  image:
-    name: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-    entrypoint:
-      - '/usr/bin/env'
-      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
   script:
       - cd ${TF_ROOT}
-      - ls
-      - cat plan.json
+      - breakdown --path plan.json
+      - diff --path plan.json
 
 run_custodian:
   image: python:latest
