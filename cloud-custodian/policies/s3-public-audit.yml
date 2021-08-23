@@ -1,0 +1,44 @@
+policies:
+  - name: s3-public-audit
+    description: |
+      Cloud Custodian Public S3 Audit
+    comments: |
+      Send notification when public S3 bucket gets created
+    resource: s3
+    mode:
+      type: cloudtrail
+      role: arn:aws:iam::793520626455:role/CloudCustodianLambda
+      events:
+        - CreateBucket
+        - source: s3.amazonaws.com
+          event: PutBucketAcl
+          ids: "requestParameters.bucketName"
+
+    filters:
+      - type: global-grants
+    actions:
+      - type: notify
+        template: slack-s3-public-audit
+        slack_template: slack-s3-public-audit
+        action_desc: |
+          notify slack channel cloudcustodian at 11:34
+        #template_format: 'html'
+        #priority_header: '5'
+        #subject: 'CloudCustodian: Unused Security Groups'
+        slack_msg_color: danger
+        to:
+          #- slack://#cloudcustodian
+          - https://hooks.slack.com/services/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
+        transport:
+          type: sqs
+          queue: https://sqs.eu-central-1.amazonaws.com/793520626455/c7n-mailer-test
+#Scan buckets that allow for global access in their ACLs and delete the associated ACL permissions.
+  # - name: s3-global-access
+  # resource: s3
+  # filters:
+  #   - type: global-grants
+  # actions:
+  #   - type: delete-global-grants
+  #     grantees:
+  #       - "http://acs.amazonaws.com/groups/global/AllUsers"
+  #       - "http://acs.amazonaws.com/groups/global/AuthenticatedUsers"

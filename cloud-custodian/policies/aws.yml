@@ -1,0 +1,62 @@
+policies:
+  - name: action_delete-instance-without-tag-owner
+    description: |
+      Deletes all instances without a tag called owner
+    resource: ec2
+    mode:
+      type: pull
+    filters:
+      - "tag:owner": absent
+    actions:
+      - terminate
+      - type: notify
+        slack_template: slack-ec2-tag-audit
+        template: slack-ec2-tag-audit
+        action_desc: |
+          Deletes all instances without a tag called owner
+        #template_format: 'html'
+        #priority_header: '5'
+        #subject: 'CloudCustodian: Unused Security Groups'
+        slack_msg_color: danger
+        to:
+          #- slack://#cloudcustodian
+          - https://hooks.slack.com/services/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
+        transport:
+          type: sqs
+          queue: https://sqs.eu-central-1.amazonaws.com/793520626455/c7n-mailer-test
+  - name: action_stop-instance-with-tag-custodianoffhours
+    description: |
+      Will stop the instance after 8:30pm if it has a custodianoffhours-tag
+    resource: ec2
+    filters:
+      - type: offhour
+        tag: custodianoffhours
+        default_tz: cet
+        offhour: 20
+    actions:
+      - stop
+
+  - name: action_start-instance-with-tag-custodianoffhours
+    description: |
+      Will start the instance after 8:30am if it has a custodianoffhours-tag
+    resource: ec2
+    filters:
+      - type: onhour
+        tag: custodianoffhours
+        default_tz: cet
+        onhour: 8
+    actions:
+      - start
+
+  - name: action_stop-instance-with-public-ip
+    resource: ec2
+    description: |
+      This policy stops all instances with public ip, that don´t have a publicip tag
+    filters:
+      - and:
+        - "tag:publicip": absent
+        - type: value
+          key: "PublicIpAddress"
+          value: not-null
+    actions:
+      - stop

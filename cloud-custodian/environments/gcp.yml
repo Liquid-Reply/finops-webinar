@@ -1,0 +1,9 @@
+projects:
+- name: go-de-demo-anthos
+  project_id: go-de-demo-anthos
+  tags:
+  - label:env:anthos  
+# - name: go-de-demo-mkoerbaecher
+#   project_id: go-de-demo-mkoerbaecher
+#   tags:
+#   - label:env:mkoerbaecher

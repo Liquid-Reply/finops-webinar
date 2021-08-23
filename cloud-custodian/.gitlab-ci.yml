@@ -1,0 +1,23 @@
+image: python:latest
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+    - venv/
+
+run_custodian:
+  before_script:
+    - python -V
+    - pip install virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+    - pip install -r requirements.txt
+    - echo $GOOGLE_SA_KEY > key.json
+    - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
+
+  script:
+    - c7n-org run -c environments/gcp.yml -s output -u policies/gcp.yml
+    - c7n-org run -c environments/aws.yml -s output -u policies/aws.yml

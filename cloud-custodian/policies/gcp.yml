@@ -1,0 +1,67 @@
+policies:
+  - name: action_delete-instance-without-label-owner
+    description: |
+      Deletes all instances without a tag called owner
+    resource: gcp.instance
+    mode:
+      type: pull
+    filters:
+      - "tag:owner": absent
+    actions:
+      - type: delete
+
+  - name: action_stop-instance-with-label-custodianoffhours
+    description: |
+      Will stop the instance after 8:30pm if it has a custodianoffhours-tag
+    comment: |
+      Stop gcp.instance instances after hours that have custom tag of
+      tag = 'StopAfterHours'
+      value = schedule
+      example value -> 'off=(M-F,23);tz=est'
+      use 'tz=pt' for pacific time
+      See http://capitalone.github.io/cloud-custodian/docs/quickstart/offhours.html#offhours
+    resource: gcp.instance
+    mode:
+      type: pull
+    filters:
+      - type: offhour
+        tag: custodianoffhours
+        default_tz: "Europe/Berlin"
+        offhour: 20
+    actions:
+      - stop
+  - name: action_start-instance-with-label-custodianoffhours
+    description: |
+      Will start the instance after 8:30am if it has a custodianoffhours-tag
+    comments: |
+      Start gcp.instance instances after onhours that have custom tag of
+      tag = 'StartAfterHours'
+      value = schedule
+      example value -> 'on=(M-F,16);tz=est'
+      use 'tz=pt' for pacific time
+      See http://capitalone.github.io/cloud-custodian/docs/quickstart/offhours.html#offhours
+    resource: gcp.instance
+    mode:
+      type: pull
+    filters:
+      - type: onhour
+        tag: custodianoffhours
+        default_tz: "Europe/Berlin"
+        onhour: 8
+    actions:
+      - start
+
+  - name: action_stop-instance-with-public-ip
+    description: |
+      This policy stops all instances with public ip, that don´t have a publicip tag
+    resource: gcp.instance
+    mode:
+      type: pull
+    filters:
+      - and:
+        - type: value
+          key: networkInterfaces[0].accessConfigs[0].name
+          value: "External NAT"
+        - "tag:publicip": absent
+    actions:
+      - stop

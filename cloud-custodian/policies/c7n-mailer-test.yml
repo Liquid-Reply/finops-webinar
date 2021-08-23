@@ -1,0 +1,15 @@
+  policies:
+  - name: c7n-mailer-test
+    resource: sqs
+    filters:
+      - "tag:MailerTest": absent
+    actions:
+      - type: notify
+        template: default
+        priority_header: '2'
+        subject: testing the c7n mailer
+        to:
+          - x.cai@reply.de
+        transport:
+          type: sqs
+          queue: https://sqs.eu-central-1.amazonaws.com/793520626455/c7n-mailer-test
