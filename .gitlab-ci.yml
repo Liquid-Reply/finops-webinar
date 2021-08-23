@@ -8,16 +8,16 @@ cache:
     - .cache/pip
     - venv/
 
-run_custodian:
+run_cloud_custodian:
   before_script:
     - python -V
     - pip install virtualenv
     - virtualenv venv
     - source venv/bin/activate
-    - pip install -r requirements.txt
+    - pip install -r cloud-custodian/requirements.txt
     - echo $GOOGLE_SA_KEY > key.json
     - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
 
   script:
-    - c7n-org run -c environments/gcp.yml -s output -u policies/gcp.yml
-    - c7n-org run -c environments/aws.yml -s output -u policies/aws.yml
+    - c7n-org run -c cloud-custodian/environments/gcp.yml -s output -u cloud-custodian/policies/gcp.yml
+    - c7n-org run -c cloud-custodian/environments/aws.yml -s output -u cloud-custodian/policies/aws.yml
