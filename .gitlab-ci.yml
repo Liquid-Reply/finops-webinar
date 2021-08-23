@@ -19,6 +19,8 @@ plan_terraform:
       - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
   script:
       - cd ${TF_ROOT}
+      - echo $GOOGLE_SA_KEY > key.json
+      - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
       - gitlab-terraform init
       - gitlab-terraform validate
       - gitlab-terraform plan
@@ -60,4 +62,3 @@ run_custodian:
 
   script:
     - c7n-org run -c cloud-custodian/environments/gcp.yml -s output -u cloud-custodian/policies/gcp.yml
-    - c7n-org run -c cloud-custodian/environments/aws.yml -s output -u cloud-custodian/policies/aws.yml
