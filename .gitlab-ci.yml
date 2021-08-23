@@ -25,7 +25,7 @@ plan_terraform:
       - gitlab-terraform validate
       - gitlab-terraform plan
       - gitlab-terraform plan-json
-      - ls
+
   artifacts:
     paths:
       - ${TF_ROOT}/plan.json
@@ -41,6 +41,7 @@ run_infracost:
       - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
   script:
       - cd ${TF_ROOT}
+      - ls
       - cat plan.json
 
 run_custodian:
