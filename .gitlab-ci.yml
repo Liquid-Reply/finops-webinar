@@ -1,6 +1,7 @@
 stages:
-  - infra
-  - runtime
+  - plan
+  - check
+  - apply
 variables:
     TF_ROOT: ${CI_PROJECT_DIR}/infracost
     TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/example-production
@@ -11,7 +12,7 @@ cache:
       - ${TF_ROOT}/.terraform
 
 plan_terraform:
-  stage: infra
+  stage: plan
   image:
     name: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
     entrypoint:
@@ -33,7 +34,7 @@ plan_terraform:
       terraform: ${TF_ROOT}/plan.json
 
 run_infracost:
-  stage: infra
+  stage: check
   dependencies:
     - plan_terraform
   image:
@@ -56,7 +57,7 @@ run_custodian:
     paths:
       - .cache/pip
       - venv/
-  stage: runtime
+  stage: apply
   before_script:
     - python -V
     - pip install virtualenv
