@@ -40,8 +40,8 @@ run_infracost:
   dependencies:
     - plan_terraform
   script:
-      - breakdown --path plan.json
-      - diff --path plan.json
+      - infracost breakdown --path plan.json
+      - infracost diff --path plan.json
 
 run_custodian:
   image: python:latest
