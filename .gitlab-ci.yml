@@ -42,6 +42,8 @@ run_infracost:
       - '/usr/bin/env'
       - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
   script:
+      - ls
+      - cat plan.json
       - cd ${TF_ROOT}
       - ls
       - cat plan.json
