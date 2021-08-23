@@ -24,12 +24,13 @@ plan_terraform:
       - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
       - gitlab-terraform init
       - gitlab-terraform validate
-      - gitlab-terraform plan -out=tfplan.json
-      - terraform show --json tfplan.json | jq -r '([.resource_changes[]?.change.actions?]|flatten)|{"create":(map(select(.=="create"))|length),"update":(map(select(.=="update"))|length),"delete":(map(select(.=="delete"))|length)}' > plan.json
+      - gitlab-terraform plan
+      - gitlab-terraform plan-json
+      - ls
   artifacts:
-    name: plan_terraform
+    name: plan
     paths:
-      - ${TF_ROOT}/plan.json
+      - ${TF_ROOT}/plan.cache
     reports:
       terraform: ${TF_ROOT}/plan.json
 
