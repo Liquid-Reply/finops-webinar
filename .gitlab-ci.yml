@@ -25,6 +25,7 @@ plan_terraform:
       - gitlab-terraform validate
       - gitlab-terraform plan
       - gitlab-terraform plan-json
+      - ls
   artifacts:
     paths:
       - ${TF_ROOT}/plan.json
