@@ -25,10 +25,12 @@ plan_terraform:
       - gitlab-terraform validate
       - gitlab-terraform plan
       - gitlab-terraform plan-json
-
   artifacts:
+    name: plan_terraform
     paths:
       - ${TF_ROOT}/plan.json
+    reports:
+      terraform: ${TF_ROOT}/plan.json
 
 run_infracost:
   stage: infra
