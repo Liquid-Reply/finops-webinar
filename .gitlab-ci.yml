@@ -41,10 +41,6 @@ run_infracost:
   script:
       - ls
       - ls ${TF_ROOT}
-      - cat /etc/*-release
-      - apt-get update 
-      - apt-get -y upgrade
-      - apt install -y curl
       - os=$(uname | tr '[:upper:]' '[:lower:]')
       - arch=$(uname -m | tr '[:upper:]' '[:lower:]' | sed -e s/x86_64/amd64/)
       - echo "Downloading latest release of infracost-$os-$arch..."
