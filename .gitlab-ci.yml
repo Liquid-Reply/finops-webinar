@@ -43,6 +43,7 @@ run_infracost:
       - ls ${TF_ROOT}
       - apt-get update 
       - apt-get -y upgrade
+      - apt install -y curl
       - curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
       - infracost
 
