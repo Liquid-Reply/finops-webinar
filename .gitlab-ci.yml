@@ -50,10 +50,8 @@ run_infracost:
       - curl -sL https://github.com/infracost/infracost/releases/latest/download/infracost-$os-$arch.tar.gz | tar xz -C /tmp
       - echo "Moving /tmp/infracost-$os-$arch to /usr/local/bin/infracost"
       - mv /tmp/infracost-$os-$arch /usr/local/bin/infracost
-      - mkdir /root/.config && mkdir /root/.config/infracost
-      - cat $INFRACOST_API_KEY
-      - cp $INFRACOST_API_KEY > /root/.config/infracost/credentials.yml
-      - cat /root/.config/infracost/credentials.yml
+      - mkdir -p /root/.config/infracost
+      - cp $INFRACOST_API_KEY /root/.config/infracost/credentials.yml
       - echo "Completed installing $(infracost --version)"
       - infracost breakdown --path infracost/plan.cache
       - infracost diff --path infracost/plan.cache
