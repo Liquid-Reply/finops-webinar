@@ -39,8 +39,6 @@ run_infracost:
   dependencies:
     - plan_terraform
   script:
-      - ls
-      - ls ${TF_ROOT}
       - os=$(uname | tr '[:upper:]' '[:lower:]')
       - arch=$(uname -m | tr '[:upper:]' '[:lower:]' | sed -e s/x86_64/amd64/)
       - echo "Downloading latest release of infracost-$os-$arch..."
@@ -50,9 +48,10 @@ run_infracost:
       - mkdir -p /root/.config/infracost
       - cp $INFRACOST_API_KEY /root/.config/infracost/credentials.yml
       - echo "Completed installing $(infracost --version)"
+      - cd ${TF_ROOT}
       - gitlab-terraform init
-      - infracost breakdown --path infracost/plan.cache
-      - infracost diff --path infracost/plan.cache
+      - infracost breakdown --path plan.cache
+      - infracost diff --path plan.cache
 
 run_custodian:
   image: python:latest
