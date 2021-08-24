@@ -34,7 +34,7 @@ plan_terraform:
       terraform: ${TF_ROOT}/plan.json
 
 run_infracost:
-  image: ubuntu
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: check
   dependencies:
     - plan_terraform
