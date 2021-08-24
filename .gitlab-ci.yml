@@ -51,6 +51,7 @@ run_infracost:
       - echo "Moving /tmp/infracost-$os-$arch to /usr/local/bin/infracost"
       - mv /tmp/infracost-$os-$arch /usr/local/bin/infracost
       - mkdir /root/.config && mkdir /root/.config/infracost
+      - cat $INFRACOST_API_KEY
       - cp $INFRACOST_API_KEY > /root/.config/infracost/credentials.yml
       - cat /root/.config/infracost/credentials.yml
       - echo "Completed installing $(infracost --version)"
