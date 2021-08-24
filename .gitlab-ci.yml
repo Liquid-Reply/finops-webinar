@@ -41,6 +41,7 @@ run_infracost:
   script:
       - ls
       - ls ${TF_ROOT}
+      - cat /etc/*-release
       - apt-get update 
       - apt-get -y upgrade
       - apt install -y curl
