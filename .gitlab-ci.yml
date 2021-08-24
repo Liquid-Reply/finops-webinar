@@ -26,7 +26,6 @@ plan_terraform:
       - gitlab-terraform validate
       - gitlab-terraform plan
       - gitlab-terraform plan-json
-      - ls
   artifacts:
     name: plan
     paths:
@@ -35,13 +34,17 @@ plan_terraform:
       terraform: ${TF_ROOT}/plan.json
 
 run_infracost:
-  image: infracost/infracost
+  image: ubuntu
   stage: check
   dependencies:
     - plan_terraform
   script:
-      - infracost breakdown --path plan.json
-      - infracost diff --path plan.json
+      - ls
+      - ls ${TF_ROOT}
+      - apt-get update 
+      - apt-get -y upgrade
+      - curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
+      - infracost
 
 run_custodian:
   image: python:latest
