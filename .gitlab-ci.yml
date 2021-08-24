@@ -51,8 +51,9 @@ run_infracost:
       - echo "Moving /tmp/infracost-$os-$arch to /usr/local/bin/infracost"
       - mv /tmp/infracost-$os-$arch /usr/local/bin/infracost
       - echo "Completed installing $(infracost --version)"
-      - ls / 
-      - ls /root/
+      - ls ~
+      - cd ~
+      - pwd
       - echo $INFRACOST_API_KEY > /root/.config/infracost/credentials.yml
       - infracost breakdown --path infracost/plan.cache
       - infracost diff --path infracost/plan.cache
