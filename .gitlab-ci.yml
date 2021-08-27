@@ -23,10 +23,10 @@ plan_terraform:
       - cd ${TF_ROOT}
       - echo $GOOGLE_SA_KEY > key.json
       - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
-      - gitlab-terraform init -backend-config=password=${CI_JOB_TOKEN}
-      - gitlab-terraform validate -backend-config=password=${CI_JOB_TOKEN}
-      - gitlab-terraform plan -backend-config=password=${CI_JOB_TOKEN}
-      - gitlab-terraform plan-json -backend-config=password=${CI_JOB_TOKEN}
+      - gitlab-terraform init 
+      - gitlab-terraform validate
+      - gitlab-terraform plan
+      - gitlab-terraform plan-json
   artifacts:
     name: plan
     paths:
