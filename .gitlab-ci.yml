@@ -50,6 +50,7 @@ run_infracost:
       - cd ${TF_ROOT}
       - gitlab-terraform init
       - ls
+      - cat plan.cache
       - infracost breakdown --path plan.cache
       - infracost diff --path plan.cache
 
