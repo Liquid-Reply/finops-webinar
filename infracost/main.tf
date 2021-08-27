@@ -44,16 +44,42 @@ module "gke" {
   create_service_account      = true
   enable_binary_authorization = var.enable_binary_authorization
   skip_provisioners           = var.skip_provisioners
-  node_pools                  = [ { "name": "default-node-pool" } ]
-  node_pools_labels           = {
+    node_pools = [
+    {
+      name            = "pool-01"
+      min_count       = 1
+      max_count       = 2
+      auto_upgrade    = true
+    },
+    {
+      name              = "pool-02"
+      machine_type      = "n1-standard-2"
+      min_count         = 1
+      max_count         = 2
+      local_ssd_count   = 0
+      disk_size_gb      = 30
+      disk_type         = "pd-standard"
+      accelerator_count = 1
+    }
+  ]
+
+  node_pools_labels = {
     all = {
-      owner = "fstoeber"
+      all-pools-example = true
     }
-    default-node-pool     = {
-      owner = "fstoeber"
-    }
-    preemptible = {
+    pool-01 = {
+      pool-01-example = true
       owner = "fstoeber"
     }
   }
+
+  node_pools_tags = {
+    all = [
+      "all-node-example",
+    ]
+    pool-01 = [
+      "pool-01-example",
+    ]
+  }
+
 }
