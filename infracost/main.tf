@@ -44,7 +44,9 @@ module "gke" {
   create_service_account      = true
   enable_binary_authorization = var.enable_binary_authorization
   skip_provisioners           = var.skip_provisioners
-  # depends_on = [
-  #   google_service_account.default
-  # ]
+  node_config {
+    labels = {
+      owner = "florianstoeber"
+    }
+  }
 }
