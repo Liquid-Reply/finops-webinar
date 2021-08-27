@@ -44,7 +44,8 @@ module "gke" {
   create_service_account      = true
   enable_binary_authorization = var.enable_binary_authorization
   skip_provisioners           = var.skip_provisioners
-  node_pools_labels = {
+  node_pools                  = [ { "name": "default-node-pool" } ]
+  node_pools_labels           = {
     all = {
       owner = "fstoeber"
     }
