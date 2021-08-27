@@ -49,6 +49,7 @@ run_infracost:
       - echo "Completed installing $(infracost --version)"
       - cd ${TF_ROOT}
       - gitlab-terraform init
+      - ls
       - infracost breakdown --path plan.cache
       - infracost diff --path plan.cache
 
