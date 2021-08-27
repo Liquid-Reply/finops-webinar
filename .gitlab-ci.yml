@@ -48,6 +48,8 @@ run_infracost:
       - mv /tmp/infracost-$os-$arch /usr/local/bin/infracost
       - echo "Completed installing $(infracost --version)"
       - cd ${TF_ROOT}
+      - echo $GOOGLE_SA_KEY > key.json
+      - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
       - gitlab-terraform init
       - gitlab-terraform plan
       - infracost breakdown --path plan.cache
