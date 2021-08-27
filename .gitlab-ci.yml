@@ -2,6 +2,7 @@ stages:
   - plan
   - check
   - apply
+  - destroy
 variables:
     TF_ROOT: ${CI_PROJECT_DIR}/infracost
     TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/example-production
@@ -90,6 +91,7 @@ run_custodian:
 
 destroy_terraform:
   stage: destroy
+  when: manual
   image:
     name: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
     entrypoint:
