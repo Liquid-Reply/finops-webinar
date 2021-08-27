@@ -51,6 +51,21 @@ run_infracost:
       - infracost breakdown --path plan.cache
       - infracost diff --path plan.cache
 
+apply_terraform:
+  stage: apply
+  image:
+    name: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+    entrypoint:
+      - '/usr/bin/env'
+      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  script:
+      - cd ${TF_ROOT}
+      - echo $GOOGLE_SA_KEY > key.json
+      - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
+      - gitlab-terraform init
+      - gitlab-terraform validate
+      - gitlab-terraform apply
+
 run_custodian:
   image: python:latest
   variables:
