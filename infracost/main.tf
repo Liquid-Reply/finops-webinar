@@ -86,11 +86,11 @@ module "gke" {
   name                       = "gke-test-1"
   region                     = "us-central1"
   zones                      = ["us-central1-a", "us-central1-b", "us-central1-f"]
-  network                    = "vpc-01"
+  network                    = "default"
   create_service_account      = true
-  subnetwork                 = "us-central1-01"
-  ip_range_pods              = "us-central1-01-gke-01-pods"
-  ip_range_services          = "us-central1-01-gke-01-services"
+  subnetwork                 = "default"
+  ip_range_pods              = ""
+  ip_range_services          = ""
   http_load_balancing        = false
   horizontal_pod_autoscaling = true
   network_policy             = false
