@@ -48,7 +48,11 @@ module "gke" {
     all = {
       owner = "fstoeber"
     }
-    default     = {}
-    preemptible = {}
+    default-node-pool     = {
+      owner = "fstoeber"
+    }
+    preemptible = {
+      owner = "fstoeber"
+    }
   }
 }
