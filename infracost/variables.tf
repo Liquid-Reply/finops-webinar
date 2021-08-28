@@ -56,9 +56,6 @@ variable "enable_binary_authorization" {
 
 # Labeling for billing purposes #
 variable "resource_labels" {
-  default = {
-    environment   = "development"
-    owner         = "fstoeber"
-  }
+  default = false
   description = "Kubernetes cluster-wide resource labels"
 }
