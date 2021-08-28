@@ -59,7 +59,6 @@ variable "resource_labels" {
   default = {
     environment   = "development"
     owner         = "fstoeber"
-    ownermail     = "fstoeber@reply.de"
   }
   description = "Kubernetes cluster-wide resource labels"
 }
