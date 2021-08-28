@@ -44,7 +44,7 @@ module "gke" {
   create_service_account      = true
   enable_binary_authorization = var.enable_binary_authorization
   skip_provisioners           = var.skip_provisioners
-  resource_labels             = var.resource_labels
+  cluster_resource_labels     = var.resource_labels
     node_pools = [
     {
       name            = "pool-01"
