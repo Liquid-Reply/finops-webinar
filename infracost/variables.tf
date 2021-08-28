@@ -53,3 +53,13 @@ variable "enable_binary_authorization" {
   description = "Enable BinAuthZ Admission controller"
   default     = false
 }
+
+# Labeling for billing purposes #
+variable "resource_labels" {
+  default = {
+    environment   = "development"
+    owner         = "fstoeber"
+    ownermail     = "fstoeber@reply.de"
+  }
+  description = "Kubernetes cluster-wide resource labels"
+}
