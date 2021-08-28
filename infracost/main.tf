@@ -83,8 +83,9 @@ module "gke" {
 
 
 resource "google_service_account" "default" {
-  account_id   = "instance"
-  display_name = "Instance Service Account"
+  account_id    = "instance"
+  display_name  = "Instance Service Account"
+  project       = var.project_id
 }
 
 resource "google_compute_instance" "instance_without-owner-label" {
