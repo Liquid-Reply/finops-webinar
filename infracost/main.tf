@@ -87,11 +87,44 @@ resource "google_service_account" "default" {
   display_name = "Instance Service Account"
 }
 
-resource "google_compute_instance" "default" {
+resource "google_compute_instance" "instance_without-owner-label" {
   name         = "test-without-owner-label"
   machine_type = "e2-medium"
   zone         = "us-central1-a"
 
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  // Local SSD disk
+  scratch_disk {
+    interface = "SCSI"
+  }
+
+  network_interface {
+    network = "default"
+
+    access_config {
+      // Ephemeral public IP
+    }
+  }
+
+  service_account {
+    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+    email  = google_service_account.default.email
+    scopes = ["cloud-platform"]
+  }
+}
+
+resource "google_compute_instance" "instance_with-owner-label" {
+  name         = "test-without-owner-label"
+  machine_type = "e2-medium"
+  zone         = "us-central1-a"
+  labels {
+    owner = "fstoeber"
+  }
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-9"
