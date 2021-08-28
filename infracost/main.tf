@@ -122,7 +122,7 @@ resource "google_compute_instance" "instance_with-owner-label" {
   name         = "test-without-owner-label"
   machine_type = "e2-medium"
   zone         = "us-central1-a"
-  labels {
+  labels       = {
     owner = "fstoeber"
   }
   boot_disk {
