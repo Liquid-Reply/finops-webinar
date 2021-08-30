@@ -2,6 +2,7 @@ stages:
   - plan
   - check
   - apply
+  - finops
   - destroy
 variables:
     TF_ROOT: ${CI_PROJECT_DIR}/infracost
@@ -75,7 +76,7 @@ run_custodian:
     paths:
       - .cache/pip
       - venv/
-  stage: apply
+  stage: finops
   before_script:
     - python -V
     - pip install virtualenv
