@@ -60,12 +60,18 @@ include:
   remote: 'https://gitlab.com/infracost/infracost-gitlab-ci/-/raw/master/infracost.yml'
 
 infracost-job:
+  before_script:
+    - echo "Execute this command before any `script:` commands."
+    - cd ${TF_ROOT}
+    - echo $GOOGLE_SA_KEY > key.json
+    - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
+    - ./init.sh 
   only:
     - merge_requests
   stage: infracost
   extends: .infracost
   variables:
-    path: "${TF_ROOT}/.terraform"
+    path: "${TF_ROOT}"
     terraform_plan_flags: "-var-file=terraform.tfvars"
 
 
