@@ -1,4 +1,4 @@
-terraform init -migrate-state \
+terraform init \
     -backend-config="address=https://gitlab.com/api/v4/projects/29054924/terraform/state/example-production" \
     -backend-config="lock_address=https://gitlab.com/api/v4/projects/29054924/terraform/state/example-production/lock" \
     -backend-config="unlock_address=https://gitlab.com/api/v4/projects/29054924/terraform/state/example-production/lock" \
