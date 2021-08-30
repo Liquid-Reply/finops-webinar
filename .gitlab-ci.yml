@@ -50,7 +50,7 @@ run_infracost:
       - mv /tmp/infracost-$os-$arch /usr/local/bin/infracost
       - echo "Completed installing $(infracost --version)"
       - cd ${TF_ROOT}
-      - init.sh 
+      - ./init.sh 
       - infracost breakdown --path . --terraform-plan-flags "-var-file=terraform.tfvars"
       - infracost diff . --terraform-plan-flags "-var-file=terraform.tfvars"
 
@@ -65,7 +65,7 @@ apply_terraform:
       - cd ${TF_ROOT}
       - echo $GOOGLE_SA_KEY > key.json
       - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
-      - init.sh 
+      - ./init.sh 
       - gitlab-terraform validate
       - gitlab-terraform apply
 
@@ -104,6 +104,6 @@ destroy_terraform:
       - cd ${TF_ROOT}
       - echo $GOOGLE_SA_KEY > key.json
       - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
-      - gitlab-terraform init
+      - ./init.sh
       - gitlab-terraform validate
       - gitlab-terraform destroy
