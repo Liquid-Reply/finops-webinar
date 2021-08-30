@@ -111,7 +111,7 @@ resource "google_compute_instance" "instance_without-owner-label" {
 
 resource "google_compute_instance" "instance_with-owner-label" {
   project      = var.project_id
-  name         = "test-without-owner-label"
+  name         = "test-with-owner-label"
   machine_type = "e2-medium"
   zone         = "us-central1-a"
   labels       = {
