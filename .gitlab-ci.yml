@@ -59,13 +59,13 @@ infracost-job:
   image:
     name: infracost/infracost:latest # Use a specific version of the image instead of latest if locking the image is preferred
     entrypoint: [""] # Do not run the default entrypoint
-  before_script:
-    - echo "Execute this command before any `script:` commands."
-    - cd ${TF_ROOT}
-    - echo $GOOGLE_SA_KEY > key.json
-    - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
-    - ./init.sh 
-  script: "/scripts/ci/diff.sh" # Do not change
+  script: 
+      - echo "Execute this command before any `script:` commands."
+      - cd ${TF_ROOT}
+      - echo $GOOGLE_SA_KEY > key.json
+      - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
+      - ./init.sh
+      - "../scripts/ci/diff.sh" # Do not change
   only:
     - merge_requests
   stage: infracost
