@@ -65,7 +65,7 @@ infracost-job:
   stage: infracost
   extends: .infracost
   variables:
-    path: "${TF_ROOT}/.terraform"
+    path: "${TF_ROOT}"
     terraform_plan_flags: "-var-file=terraform.tfvars"
 
 
