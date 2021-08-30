@@ -35,23 +35,24 @@ plan_terraform:
     reports:
       terraform: ${TF_ROOT}/plan.json
 
-# run_infracost:
-#   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-#   stage: check
-#   dependencies:
-#     - plan_terraform
-#   script:
-#       - os=$(uname | tr '[:upper:]' '[:lower:]')
-#       - arch=$(uname -m | tr '[:upper:]' '[:lower:]' | sed -e s/x86_64/amd64/)
-#       - echo "Downloading latest release of infracost-$os-$arch..."
-#       - curl -sL https://github.com/infracost/infracost/releases/latest/download/infracost-$os-$arch.tar.gz | tar xz -C /tmp
-#       - echo "Moving /tmp/infracost-$os-$arch to /usr/local/bin/infracost"
-#       - mv /tmp/infracost-$os-$arch /usr/local/bin/infracost
-#       - echo "Completed installing $(infracost --version)"
-#       - cd ${TF_ROOT}
-#       - gitlab-terraform init
-#       - infracost breakdown --path plan.cache
-#       - infracost diff --path plan.cache
+run_infracost:
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  stage: finops
+  when: manual
+  dependencies:
+    - plan_terraform
+  script:
+      - os=$(uname | tr '[:upper:]' '[:lower:]')
+      - arch=$(uname -m | tr '[:upper:]' '[:lower:]' | sed -e s/x86_64/amd64/)
+      - echo "Downloading latest release of infracost-$os-$arch..."
+      - curl -sL https://github.com/infracost/infracost/releases/latest/download/infracost-$os-$arch.tar.gz | tar xz -C /tmp
+      - echo "Moving /tmp/infracost-$os-$arch to /usr/local/bin/infracost"
+      - mv /tmp/infracost-$os-$arch /usr/local/bin/infracost
+      - echo "Completed installing $(infracost --version)"
+      - cd ${TF_ROOT}
+      - gitlab-terraform init
+      - infracost breakdown --path plan.cache
+      - infracost diff --path plan.cache
 
 apply_terraform:
   stage: apply
