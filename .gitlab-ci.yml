@@ -24,7 +24,7 @@ plan_terraform:
       - cd ${TF_ROOT}
       - echo $GOOGLE_SA_KEY > key.json
       - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
-      - init.sh 
+      - ./init.sh 
       - gitlab-terraform validate
       - gitlab-terraform plan
       - gitlab-terraform plan-json
