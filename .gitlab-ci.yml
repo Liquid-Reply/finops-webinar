@@ -55,24 +55,24 @@ run_infracost:
       - infracost breakdown --path . --terraform-plan-flags "-var-file=terraform.tfvars"
       - infracost diff --path . --terraform-plan-flags "-var-file=terraform.tfvars"
 
-include:
-  # Use a specific version of the template instead of master if locking the template is preferred
-  remote: 'https://gitlab.com/infracost/infracost-gitlab-ci/-/raw/master/infracost.yml'
-
 infracost-job:
+  image:
+    name: infracost/infracost:latest # Use a specific version of the image instead of latest if locking the image is preferred
+    entrypoint: [""] # Do not run the default entrypoint
   before_script:
     - echo "Execute this command before any `script:` commands."
     - cd ${TF_ROOT}
     - echo $GOOGLE_SA_KEY > key.json
     - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
     - ./init.sh 
+  script: "/scripts/ci/diff.sh" # Do not change
   only:
     - merge_requests
   stage: infracost
-  extends: .infracost
   variables:
     path: "${TF_ROOT}"
     terraform_plan_flags: "-var-file=terraform.tfvars"
+    post_condition: '{"has_diff": true}'
 
 
 apply_terraform:
