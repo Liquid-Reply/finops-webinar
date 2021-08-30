@@ -91,7 +91,7 @@ resource "google_service_account" "default" {
 resource "google_compute_instance" "instance_without-owner-label" {
   project      = var.project_id
   name         = "test-without-owner-label"
-  machine_type = "e2-medium"
+  machine_type = "e2-small"
   zone         = "us-central1-a"
   boot_disk {
     initialize_params {
