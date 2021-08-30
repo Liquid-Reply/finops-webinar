@@ -54,7 +54,7 @@ run_infracost:
       - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
       - ./init.sh 
       - infracost breakdown --path . --terraform-plan-flags "-var-file=terraform.tfvars"
-      - infracost diff . --terraform-plan-flags "-var-file=terraform.tfvars"
+      - infracost diff --path . --terraform-plan-flags "-var-file=terraform.tfvars"
 
 apply_terraform:
   stage: apply
