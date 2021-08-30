@@ -51,8 +51,8 @@ run_infracost:
       - echo "Completed installing $(infracost --version)"
       - cd ${TF_ROOT}
       - gitlab-terraform init
-      - infracost breakdown --path plan.cache
-      - infracost diff --path plan.cache
+      - infracost breakdown --path . --terraform-plan-flags "-var-file=terraform.tfvars"
+      - infracost diff . --terraform-plan-flags "-var-file=terraform.tfvars"
 
 apply_terraform:
   stage: apply
