@@ -50,6 +50,8 @@ run_infracost:
       - mv /tmp/infracost-$os-$arch /usr/local/bin/infracost
       - echo "Completed installing $(infracost --version)"
       - cd ${TF_ROOT}
+      - echo $GOOGLE_SA_KEY > key.json
+      - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
       - ./init.sh 
       - infracost breakdown --path . --terraform-plan-flags "-var-file=terraform.tfvars"
       - infracost diff . --terraform-plan-flags "-var-file=terraform.tfvars"
