@@ -7,4 +7,3 @@ terraform init \
     -backend-config="lock_method=POST" \
     -backend-config="unlock_method=DELETE" \
     -backend-config="retry_wait_min=5" \
-    -reconfigure
