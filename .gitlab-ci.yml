@@ -60,6 +60,8 @@ infracost-job:
     name: infracost/infracost:latest # Use a specific version of the image instead of latest if locking the image is preferred
     entrypoint: [""] # Do not run the default entrypoint
   script: 
+      - echo $GOOGLE_SA_KEY > key.json
+      - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
       - cd ${TF_ROOT}
       - echo $GOOGLE_SA_KEY > key.json
       - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
