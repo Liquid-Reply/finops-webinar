@@ -62,7 +62,8 @@ infracost-job:
   script: 
       - cd ${TF_ROOT}
       - echo $GOOGLE_SA_KEY > key.json
-      - gcloud auth activate-service-account --key-file="$(pwd)/key.json"
+      - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
+      - echo $GOOGLE_APPLICATION_CREDENTIALS
       - ./init.sh
       - /scripts/ci/diff.sh
   only:
