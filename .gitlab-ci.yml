@@ -4,6 +4,7 @@ stages:
   - apply
   - finops
   - destroy
+  - infracost
 variables:
     TF_ROOT: ${CI_PROJECT_DIR}/infracost
     TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/example-production
@@ -54,25 +55,19 @@ run_infracost:
       - infracost breakdown --path . --terraform-plan-flags "-var-file=terraform.tfvars"
       - infracost diff --path . --terraform-plan-flags "-var-file=terraform.tfvars"
 
-merge_infracost:
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  stage: finops
+include:
+  # Use a specific version of the template instead of master if locking the template is preferred
+  remote: 'https://gitlab.com/infracost/infracost-gitlab-ci/-/raw/master/infracost.yml'
+
+infracost-job:
   only:
     - merge_requests
-  script:
-      - os=$(uname | tr '[:upper:]' '[:lower:]')
-      - arch=$(uname -m | tr '[:upper:]' '[:lower:]' | sed -e s/x86_64/amd64/)
-      - echo "Downloading latest release of infracost-$os-$arch..."
-      - curl -sL https://github.com/infracost/infracost/releases/latest/download/infracost-$os-$arch.tar.gz | tar xz -C /tmp
-      - echo "Moving /tmp/infracost-$os-$arch to /usr/local/bin/infracost"
-      - mv /tmp/infracost-$os-$arch /usr/local/bin/infracost
-      - echo "Completed installing $(infracost --version)"
-      - cd ${TF_ROOT}
-      - echo $GOOGLE_SA_KEY > key.json
-      - export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
-      - ./init.sh 
-      - infracost breakdown --path . --terraform-plan-flags "-var-file=terraform.tfvars"
-      - infracost diff --path . --terraform-plan-flags "-var-file=terraform.tfvars"
+  stage: infracost
+  extends: .infracost
+  variables:
+    path: "${TF_ROOT}/.terraform"
+    terraform_plan_flags: "-var-file=terraform.tfvars"
+
 
 apply_terraform:
   stage: apply
