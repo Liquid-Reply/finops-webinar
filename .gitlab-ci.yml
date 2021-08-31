@@ -76,6 +76,8 @@ infracost-job:
 
 apply_terraform:
   stage: apply
+  only:
+    - master
   image:
     name: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
     entrypoint:
