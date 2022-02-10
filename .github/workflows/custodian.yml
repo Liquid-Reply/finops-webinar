@@ -15,7 +15,6 @@ on: push
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  TF_DIR: ./infracost
 
 jobs:
   custodian:
@@ -26,7 +25,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: '3.9.6'
           architecture: x64
 
       - name: Checkout repository
@@ -34,8 +33,6 @@ jobs:
 
       - name: Run Cloud Custodian
         run: |
-          python -V
-
           pip install -r cloud-custodian/requirements.txt
           echo $GOOGLE_SA_KEY > key.json
           export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
