@@ -2,4 +2,4 @@ projects:
 - name: liquid-finops-intro-963
   project_id: liquid-finops-intro-963
   tags:
-  - label:env:liquid-finops-intro-963
+  - label:env:finops-intro
