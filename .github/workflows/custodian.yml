@@ -34,6 +34,6 @@ jobs:
       - name: Run Cloud Custodian
         run: |
           pip install -r cloud-custodian/requirements.txt
-          echo $GOOGLE_SA_KEY > key.json
+          echo ${{ secrets.GOOGLE_SA_KEY }} > key.json
           export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
           c7n-org run -c cloud-custodian/environments/gcp.yml -s output -u cloud-custodian/policies/gcp.yml
