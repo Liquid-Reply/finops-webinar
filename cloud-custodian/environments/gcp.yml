@@ -1,9 +1,5 @@
 projects:
-- name: go-de-demo-anthos
-  project_id: go-de-demo-anthos
+- name: liquid-finops-intro-963
+  project_id: liquid-finops-intro-963
   tags:
-  - label:env:anthos  
-# - name: go-de-demo-mkoerbaecher
-#   project_id: go-de-demo-mkoerbaecher
-#   tags:
-#   - label:env:mkoerbaecher
+  - label:env:liquid-finops-intro-963
