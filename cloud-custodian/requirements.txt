@@ -3,3 +3,4 @@ c7n_azure
 c7n_gcp
 c7n_org
 c7n-mailer
+tzdata
