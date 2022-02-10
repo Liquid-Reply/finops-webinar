@@ -37,7 +37,7 @@ jobs:
           pip install virtualenv
           virtualenv venv
           source venv/bin/activate
-          pip install --upgrade pip wheel
+          apt-get install -y ruby-full
           pip install -r cloud-custodian/requirements.txt
           echo $GOOGLE_SA_KEY > key.json
           export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
