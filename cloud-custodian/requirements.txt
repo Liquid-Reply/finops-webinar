@@ -1,5 +1,5 @@
 c7n
 c7n_azure
-c7n_gcp
+c7n_gcp=0.4.12
 c7n_org
 c7n-mailer
