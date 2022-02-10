@@ -15,7 +15,7 @@ on: push
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  TF_DIR: ./terraform
+  TF_DIR: ./infracost
 
 jobs:
   terraform:
