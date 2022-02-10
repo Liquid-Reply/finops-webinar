@@ -1,0 +1,43 @@
+
+
+# This is a basic workflow to help you get started with Actions
+
+name: Cloud Custodian Run
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on: push
+  # push:
+  #   branches: [ master ]
+  # pull_request:
+  #   branches: [ master ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  TF_DIR: ./infracost
+
+jobs:
+  custodian:
+    name: 'Cloud Custodian Run'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run Cloud Custodian
+        run: |
+          python -V
+          pip install virtualenv
+          virtualenv venv
+          source venv/bin/activate
+          pip install -r cloud-custodian/requirements.txt
+          echo $GOOGLE_SA_KEY > key.json
+          export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/key.json"
+          c7n-org run -c cloud-custodian/environments/gcp.yml -s output -u cloud-custodian/policies/gcp.yml
