@@ -22,7 +22,12 @@ jobs:
           terraform_wrapper: false # This is recommended so the `terraform show` command outputs valid JSON
 
       # IMPORTANT: add any required steps here to setup cloud credentials so Terraform can run
-
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: ${{ secrets.GOOGLE_SA_KEY }}
+          
       - name: Terraform init
         run: terraform init
         working-directory: ${{ env.working-directory }}
