@@ -18,8 +18,10 @@ Tags or labels will help you to set up good cloud infrastructure. Typcial tags a
 The owner tag will help you to:
 - Send alerts to the owner (security problems, rightsizing recommendations, etc.)
 - Charge the owner for the specific resource
+  
 The environment tag will enable you to:
 - Turn off the environment on the weekend or in the night (e.g. dev/test environments)
 - Turn off the environment in holiday times (e.g. christmas)
+  
 The budget tag will enable you to:
 - Turn off environments if the budget is exceeding
