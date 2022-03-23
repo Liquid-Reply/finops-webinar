@@ -27,7 +27,7 @@ The budget tag will enable you to:
 - Turn off environments if the budget is exceeding
  
 # Used projects
-https://cloudcustodian.io/  
+https://github.com/cloud-custodian/cloud-custodian  
 https://github.com/infracost/infracost  
 https://github.com/terraform-google-modules  
  
