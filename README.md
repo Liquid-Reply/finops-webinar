@@ -1,4 +1,4 @@
-# Finops Intro
+# Finops Webinar
 
 This repository will contain some use-cases, how tools can help us to improve a better cloud control and activate cost awarenesses on your projects.
 
