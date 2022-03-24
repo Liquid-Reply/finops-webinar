@@ -27,7 +27,10 @@ jobs:
         uses: 'google-github-actions/auth@v0'
         with:
           credentials_json: ${{ secrets.GOOGLE_SA_KEY }}
-          
+      - id: 'echo'
+        name: 'Test echo credentials'
+        run: echo ${{ secrets.GOOGLE_SA_KEY }}
+
       - name: Terraform init
         run: terraform init
         working-directory: ${{ env.working-directory }}
