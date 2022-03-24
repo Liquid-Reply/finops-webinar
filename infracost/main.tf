@@ -53,8 +53,8 @@ module "gke" {
     },
     {
       name            = "pool-02"
-      min_count       = 5
-      max_count       = 5
+      min_count       = 3
+      max_count       = 3
       auto_upgrade    = true
     }
   ]
