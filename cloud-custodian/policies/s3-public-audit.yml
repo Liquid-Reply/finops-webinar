@@ -27,8 +27,7 @@ policies:
         #subject: 'CloudCustodian: Unused Security Groups'
         slack_msg_color: danger
         to:
-          #- slack://#cloudcustodian
-          - https://hooks.slack.com/services/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
+          - slack://#cloudcustodian
         transport:
           type: sqs
           queue: https://sqs.eu-central-1.amazonaws.com/793520626455/c7n-mailer-test
